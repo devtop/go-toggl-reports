@@ -45,8 +45,16 @@ type Currency struct {
 }
 
 type Selectparameters struct {
-	start *time.Time
-	end   *time.Time
+	// Defaults to today - 6 days
+	Start       *time.Time
+
+	// Note: Maximum date span (until - since) is one year.
+	// Defaults to today, unless start is in future or more than year ago,
+	// in this case end is start + 6 days.
+	End         *time.Time
+
+	// Matches against time entry descriptions.
+	Description string
 }
 
 
@@ -74,15 +82,21 @@ func (s *SummaryService) Get(wid int, selection *Selectparameters) (*Summary, er
   params.Add("workspace_id", fmt.Sprintf("%v", wid))
 
 	if selection != nil {
-		if selection.start != nil {
-			params.Add("since", selection.start.Format(time.RFC3339))
+
+		if selection.Start != nil {
+			params.Add("since", selection.Start.Format(time.RFC3339))
 		}
-		if selection.end != nil {
-			params.Add("until", selection.end.Format(time.RFC3339))
+
+		if selection.End != nil {
+			params.Add("until", selection.End.Format(time.RFC3339))
 		}
+
+		if selection.Description != "" {
+			params.Add("description", selection.Description)
+		}
+
 	}
-//
-//  url.Add("until", "2018-01-31")
+
   req.URL.RawQuery = params.Encode()
 
 	data := new(Summary)
