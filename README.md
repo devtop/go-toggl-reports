@@ -28,6 +28,17 @@ fmt.Println("Billable: ", s.TotalBillable)
 
 Please see [examples](./examples) for a complete example.
 
+## Todos / Roadmap
+
+* Complete [summary report](togglreports/summary.go)
+* Tests for [togglreports](togglreports/togglreports.go)
+* Tests for [summary report](togglreports/summary.go)
+* Build environment / CI
++ Backlink from [Toggl API docs](https://github.com/toggl/toggl_api_docs/)
+* Detailed report
+* Weekly report
+* Project dashboard
+
 ## Credits
 
 * [go-toggl](https://github.com/gedex/go-toggl) inspired this library
